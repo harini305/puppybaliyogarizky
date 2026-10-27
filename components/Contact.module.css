@@ -1,0 +1,303 @@
+/* Contact and the footer below it fill exactly one screen together */
+.contact {
+  min-height: calc(100svh - var(--footer-h));
+  background: var(--teal-deep);
+  color: rgba(247, 242, 234, 0.85);
+}
+
+.contact h2,
+.contact h3 {
+  color: var(--cream);
+}
+
+/* Mobile order: copy, map, channels. Desktop: copy + channels left, map right. */
+.grid {
+  display: grid;
+  gap: var(--space-l);
+  grid-template-areas:
+    "copy"
+    "map"
+    "channels";
+}
+
+.intro {
+  grid-area: copy;
+  display: grid;
+  gap: var(--space-l);
+  align-content: start;
+}
+
+/* Segmented location switch with a sliding thumb */
+.switch {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: min(100%, 320px);
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(247, 242, 234, 0.1);
+  border: 1px solid rgba(247, 242, 234, 0.18);
+}
+
+.thumb {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  border-radius: 999px;
+  background: var(--cream);
+  transition: transform 0.45s var(--ease);
+}
+
+.switch button {
+  position: relative;
+  min-height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--cream);
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.switch button[aria-pressed="true"] {
+  color: var(--teal-deep);
+}
+
+.details {
+  display: grid;
+  gap: 10px;
+  animation: swap 0.5s var(--ease);
+}
+
+@keyframes swap {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.details h3 {
+  font-size: var(--step-3);
+}
+
+.area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--teal-soft);
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.map {
+  grid-area: map;
+  position: relative;
+  height: clamp(220px, 30svh, 320px);
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(247, 242, 234, 0.08);
+  border: 1px solid rgba(247, 242, 234, 0.15);
+}
+
+.map iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: saturate(0.85);
+  pointer-events: none;
+}
+
+.map[data-active] iframe {
+  pointer-events: auto;
+}
+
+/* Transparent layer over the map until it is clicked */
+.mapGuard {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 16px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.mapGuard span {
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(27, 54, 50, 0.85);
+  color: var(--cream);
+  font-size: var(--step--1);
+  font-weight: 700;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.25s ease, transform 0.3s var(--ease);
+}
+
+.mapGuard:hover span,
+.mapGuard:focus-visible span {
+  opacity: 1;
+  transform: none;
+}
+
+/* Direct contact channels */
+.channels {
+  grid-area: channels;
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgba(247, 242, 234, 0.18);
+}
+
+.channels li {
+  border-bottom: 1px solid rgba(247, 242, 234, 0.18);
+}
+
+.channel {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  min-width: 0;
+  padding-block: 10px;
+  color: var(--cream);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.channel > svg {
+  flex: none;
+  color: var(--teal-soft);
+}
+
+.channel > span {
+  display: grid;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.channel small {
+  color: rgba(247, 242, 234, 0.75);
+  font-size: var(--step--1);
+  font-weight: 400;
+}
+
+.channel:hover > span {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.emailItem {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: var(--space-s);
+  padding-bottom: 4px;
+}
+
+/* Keep the address whole; the Copy button wraps below it if space runs out */
+.emailItem .channel {
+  flex-shrink: 0;
+  max-width: 100%;
+}
+
+.emailItem .copy {
+  margin-bottom: 6px;
+}
+
+.copy {
+  flex: none;
+  min-height: 36px;
+  padding: 6px 16px;
+  border: 1px solid rgba(247, 242, 234, 0.45);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--cream);
+  font-size: var(--step--1);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.copy:hover {
+  border-color: var(--cream);
+  background: rgba(247, 242, 234, 0.1);
+}
+
+@media (max-width: 479px) {
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .actions :global(.btn) {
+    padding-inline: 12px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .intro :global(.lead) {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-areas:
+      "copy map"
+      "channels channels";
+    column-gap: clamp(40px, 5vw, 80px);
+    row-gap: var(--space-l);
+  }
+
+  .map {
+    height: auto;
+    min-height: clamp(320px, 46vh, 520px);
+  }
+
+  /* Contact details become one row under the map and text */
+  .channels {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-m);
+    border-bottom: 1px solid rgba(247, 242, 234, 0.18);
+  }
+
+  .channels li {
+    border-bottom: 0;
+  }
+
+  .channel > span {
+    overflow-wrap: normal;
+    white-space: nowrap;
+  }
+
+  .channel {
+    padding-block: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .details {
+    animation: none;
+  }
+  .thumb {
+    transition: none;
+  }
+}

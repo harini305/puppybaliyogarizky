@@ -1,0 +1,12 @@
+# dependencies and build output
+node_modules
+.next
+out
+*.log
+
+# local-only: audit, screenshots and original source assets
+docs
+
+# environment and Vercel
+.env*
+.vercel

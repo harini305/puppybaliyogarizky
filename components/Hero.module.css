@@ -1,0 +1,103 @@
+/* The header sits above the hero, so together they fill the first screen */
+.hero {
+  min-height: calc(100svh - var(--header-h));
+  background: var(--cream);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.intro {
+  max-width: 32em;
+  margin-top: var(--space-m);
+}
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: var(--space-l) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.facts li {
+  padding: 6px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 0.925rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: var(--space-l);
+}
+
+.chat {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: var(--space-m);
+}
+
+.media {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Phones: photos first so the section reads as one screen. */
+@media (max-width: 899px) {
+  .media {
+    order: -1;
+    max-width: 560px;
+    padding-top: 12px;
+  }
+}
+
+@media (max-width: 479px) {
+  .facts {
+    gap: 6px;
+    margin-top: var(--space-m);
+  }
+  .facts li {
+    padding: 4px 10px;
+    font-size: 0.8rem;
+  }
+  .ctas {
+    margin-top: var(--space-m);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+  .ctas :global(.btn) {
+    padding-inline: 12px;
+  }
+}
+
+@media (max-width: 359px) {
+  .ctas {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: clamp(48px, 6vw, 96px);
+  }
+}

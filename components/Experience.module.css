@@ -1,0 +1,308 @@
+.experience {
+  background: var(--cream);
+}
+
+/* The section fills the screen; the panels take all height under the heading */
+.inner {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.head {
+  display: grid;
+  gap: var(--space-xs) var(--space-xl);
+  align-items: last baseline;
+  margin-bottom: var(--space-l);
+}
+
+.head :global(.lead) {
+  color: var(--muted);
+}
+
+.panels {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+  min-height: 420px;
+  max-height: 680px;
+}
+
+.card {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--teal-deep);
+  isolation: isolate;
+  transition: flex-grow 0.7s var(--ease);
+}
+
+.card[data-open] {
+  flex-grow: 5;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.08);
+  filter: saturate(0.85);
+  transition: transform 1.2s var(--ease), filter 0.6s ease;
+}
+
+.card[data-open] .bg {
+  transform: none;
+  filter: none;
+}
+
+.card:not([data-open]):hover .bg {
+  transform: scale(1.03);
+}
+
+/* Shade for legibility: even on closed strips, deep at the bottom when open */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to top, rgba(15, 26, 24, 0.78), rgba(15, 26, 24, 0.35));
+  transition: opacity 0.6s ease;
+}
+
+.card[data-open]::after {
+  background: linear-gradient(to top, rgba(15, 26, 24, 0.94) 0%, rgba(15, 26, 24, 0.6) 42%, rgba(15, 26, 24, 0) 72%);
+}
+
+.trigger {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  font: inherit;
+}
+
+.trigger button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding: 24px 12px;
+  border: 0;
+  background: transparent;
+  color: var(--cream);
+  cursor: pointer;
+}
+
+.card[data-open] .trigger button {
+  cursor: default;
+}
+
+.label {
+  order: 2;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--font-heading);
+  font-size: var(--step-2);
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+}
+
+.plus {
+  order: 1;
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border: 1.5px solid rgba(247, 242, 234, 0.6);
+  border-radius: 50%;
+  transition: opacity 0.3s ease, transform 0.4s var(--ease), background-color 0.3s ease;
+}
+
+.plus::before,
+.plus::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 14px;
+  height: 1.5px;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+}
+
+.plus::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.trigger button:hover .plus {
+  background: rgba(247, 242, 234, 0.15);
+  transform: rotate(90deg);
+}
+
+.card[data-open] .label,
+.card[data-open] .plus {
+  opacity: 0;
+}
+
+.content {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  display: grid;
+  gap: var(--space-xs);
+  width: min(100%, 640px);
+  padding: clamp(24px, 3vw, 40px);
+  color: rgba(247, 242, 234, 0.92);
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.4s var(--ease), visibility 0.3s;
+}
+
+.card[data-open] .content {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.3s;
+}
+
+.title {
+  margin-bottom: 4px;
+  color: var(--cream);
+  font-family: var(--font-heading);
+  font-size: var(--step-3);
+  line-height: 1.15;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list li {
+  position: relative;
+  padding: 8px 0 8px 24px;
+  border-bottom: 1px solid rgba(247, 242, 234, 0.18);
+}
+
+.list li:last-child {
+  border-bottom: 0;
+}
+
+.list li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 1.05em;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--tan);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: var(--space-m);
+  margin: 4px 0 0;
+}
+
+.facts dt {
+  color: rgba(247, 242, 234, 0.72);
+  font-size: var(--step--1);
+}
+
+.facts dd {
+  margin: 2px 0 0;
+  color: var(--cream);
+  font-weight: 700;
+}
+
+.note {
+  color: rgba(247, 242, 234, 0.75);
+  font-size: var(--step--1);
+}
+
+@media (min-width: 768px) {
+  .head {
+    grid-template-columns: auto 1fr;
+  }
+  .head :global(.lead) {
+    justify-self: end;
+    text-align: right;
+  }
+}
+
+/* Phones and small tablets: panels stack; closed ones are slim bars */
+@media (max-width: 899px) {
+  .panels {
+    flex-direction: column;
+    min-height: 0;
+    max-height: none;
+  }
+
+  .card {
+    flex: none;
+    height: 72px;
+    transition: height 0.6s var(--ease);
+  }
+
+  .card[data-open] {
+    display: flex;
+    align-items: flex-end;
+    height: auto;
+    min-height: clamp(380px, 56svh, 460px);
+  }
+
+  .card:not([data-open]) .content {
+    display: none;
+  }
+
+  .card[data-open] .content {
+    position: relative;
+    padding-top: 120px;
+  }
+
+  .trigger button {
+    flex-direction: row;
+    padding: 0 20px;
+  }
+
+  .label {
+    order: 1;
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: var(--step-1);
+  }
+
+  .plus {
+    order: 2;
+    width: 36px;
+    height: 36px;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  .facts {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-s);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .bg,
+  .content {
+    transition: none;
+  }
+}

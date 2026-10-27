@@ -1,0 +1,323 @@
+/* Mosaic photo wall that fills the screen edge to edge */
+.gallery {
+  position: relative;
+  overflow: hidden;
+  padding: 12px;
+  background: var(--ink);
+  color: rgba(247, 242, 234, 0.85);
+}
+
+.mosaic {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "intro intro"
+    "center center"
+    "t1 t2"
+    "t3 t4"
+    "t5 t6";
+}
+
+.intro {
+  grid-area: intro;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-s);
+  padding: clamp(24px, 3vw, 40px);
+  border-radius: 12px;
+  background: var(--tan);
+  color: var(--ink);
+}
+
+.intro h2 {
+  font-size: var(--step-3);
+}
+
+.intro p {
+  max-width: 34ch;
+  color: rgba(31, 45, 42, 0.85);
+}
+
+.all {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 10px;
+  min-height: 44px;
+  margin-top: 4px;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--cream);
+  font-size: 0.925rem;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.all svg {
+  transition: transform 0.3s var(--ease);
+}
+
+.all:hover {
+  background: var(--teal-deep);
+}
+
+.all:hover svg {
+  transform: translateX(3px);
+}
+
+.cell {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(247, 242, 234, 0.06);
+  cursor: zoom-in;
+}
+
+.cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease);
+}
+
+.cell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 26, 24, 0);
+  transition: background-color 0.4s ease;
+}
+
+@media (hover: hover) {
+  .cell:hover img {
+    transform: scale(1.05);
+  }
+  .cell:hover::after {
+    background: rgba(15, 26, 24, 0.12);
+  }
+}
+
+.center {
+  grid-area: center;
+  z-index: 2;
+  aspect-ratio: 3 / 2;
+  will-change: transform;
+}
+
+.tile {
+  aspect-ratio: 4 / 3;
+}
+
+.tile[data-slot="1"] { grid-area: t1; }
+.tile[data-slot="2"] { grid-area: t2; }
+.tile[data-slot="3"] { grid-area: t3; }
+.tile[data-slot="4"] { grid-area: t4; }
+.tile[data-slot="5"] { grid-area: t5; }
+.tile[data-slot="6"] { grid-area: t6; }
+.tile[data-slot="7"] { grid-area: t7; display: none; }
+
+/* Tablet: 3 x 4 wall filling the screen */
+@media (min-width: 768px) {
+  .gallery {
+    height: 100svh;
+  }
+
+  .mosaic {
+    height: 100%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+    grid-template-areas:
+      "intro intro t1"
+      "center center t2"
+      "center center t3"
+      "t4 t5 t6";
+  }
+
+  .center,
+  .tile {
+    aspect-ratio: auto;
+    height: 100%;
+  }
+
+  .intro {
+    padding: clamp(20px, 2.5vw, 36px);
+  }
+}
+
+/* Desktop: 4 x 3 wall; the large photo sits in the middle */
+@media (min-width: 1024px) {
+  .mosaic {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    grid-template-areas:
+      "intro center center t1"
+      "t2 center center t3"
+      "t4 t5 t6 t7";
+  }
+
+  .tile[data-slot="7"] {
+    display: block;
+  }
+
+  .intro {
+    padding: clamp(20px, 2vw, 28px);
+  }
+
+  .intro h2 {
+    font-size: clamp(1.5rem, 1rem + 1.1vw, 2.2rem);
+  }
+
+  .intro p {
+    font-size: 0.95rem;
+  }
+}
+
+/* Short screens: the heading tile keeps just the title and button */
+@media (min-width: 768px) and (max-height: 820px) {
+  .intro p {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cell img,
+  .all svg {
+    transition: none;
+  }
+}
+
+/* Lightbox */
+.dialog {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--cream);
+}
+
+.dialog::backdrop {
+  background: rgba(20, 30, 28, 0.94);
+}
+
+.viewer {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: var(--space-s);
+  height: 100%;
+  padding: var(--space-m) var(--gutter);
+  pointer-events: none;
+}
+
+.figure {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 12px;
+  justify-items: center;
+  min-height: 0;
+  margin: 0;
+}
+
+.figure img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  align-self: center;
+  border-radius: 4px;
+  pointer-events: auto;
+  animation: zoom-in 0.45s var(--ease);
+}
+
+.figure img[data-dir="next"] {
+  animation-name: from-right;
+}
+
+.figure img[data-dir="prev"] {
+  animation-name: from-left;
+}
+
+@keyframes zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+
+@keyframes from-right {
+  from {
+    opacity: 0;
+    transform: translateX(48px);
+  }
+}
+
+@keyframes from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-48px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .figure img {
+    animation: none;
+  }
+}
+
+.figure figcaption {
+  max-width: 60ch;
+  text-align: center;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: rgba(247, 242, 234, 0.85);
+}
+
+.count {
+  display: block;
+  margin-top: 4px;
+  color: rgba(247, 242, 234, 0.6);
+}
+
+.dialogControls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  pointer-events: auto;
+}
+
+.dialogControls button {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1.5px solid rgba(247, 242, 234, 0.5);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--cream);
+  cursor: pointer;
+}
+
+.dialogControls button:hover {
+  border-color: var(--cream);
+  background: rgba(247, 242, 234, 0.1);
+}
+
+.close {
+  margin-left: var(--space-m);
+}

@@ -1,0 +1,246 @@
+/* Design tokens. Palette derived from the live logo (teal wordmark, sage
+   wreath, puppy tan, cream). Not a confirmed official brand palette (Q-B1). */
+:root {
+  --cream: #f7f2ea;
+  --sand: #ede3d4;
+  --paper: #fffdf9;
+  --ink: #1f2d2a;
+  --text: #3a4542;
+  --muted: #5b6663;
+  --line: #d9cebd;
+  --teal: #3a6a65;
+  --teal-dark: #24453f;
+  --teal-deep: #1b3632;
+  --teal-soft: #c9dcd7;
+  --sage: #7f9555;
+  --tan: #d6a576;
+  --clay: #a8683f;
+
+  --font-heading: "Prata", Georgia, serif;
+  --font-body: "Lato", system-ui, sans-serif;
+
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: clamp(1.1rem, 1.04rem + 0.3vw, 1.25rem);
+  --step-2: clamp(1.3rem, 1.18rem + 0.55vw, 1.6rem);
+  --step-3: clamp(1.8rem, 1.42rem + 1.6vw, 2.65rem);
+  --step-4: clamp(2.15rem, 1.6rem + 2.6vw, 3.75rem);
+
+  --container: 1200px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --header-h: 72px;
+  --footer-h: 88px;
+  /* Vertical rhythm. Panels fill one screen, so spacing scales with height. */
+  --panel-y: clamp(32px, 6vh, 80px);
+  --space-2xs: 8px;
+  --space-xs: 12px;
+  --space-s: 16px;
+  --space-m: 24px;
+  --space-l: clamp(28px, 3.5vh, 40px);
+  --space-xl: clamp(32px, 5vh, 56px);
+  --radius: 6px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Smooth scrolling is handled by GSAP ScrollSmoother (components/SmoothScroll.js) */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.16;
+  text-wrap: balance;
+  overflow-wrap: normal;
+  hyphens: manual;
+}
+
+h1 {
+  font-size: var(--step-4);
+  letter-spacing: -0.01em;
+}
+h2 {
+  font-size: var(--step-3);
+}
+h3 {
+  font-size: var(--step-2);
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+:focus-visible {
+  outline: 3px solid var(--clay);
+  outline-offset: 3px;
+}
+
+.container {
+  width: 100%;
+  max-width: calc(var(--container) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* A panel is one full screen. Content is centred vertically; if it is
+   taller than the screen, the panel grows. */
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100svh;
+  padding-block: var(--panel-y);
+}
+
+.section-head {
+  display: grid;
+  gap: var(--space-s);
+  max-width: 620px;
+}
+
+.lead {
+  font-size: var(--step-1);
+  line-height: 1.55;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 12px 24px;
+  border: 1.5px solid transparent;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: var(--teal);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--teal-dark);
+}
+
+.btn-outline {
+  border-color: var(--ink);
+  color: var(--ink);
+  background: transparent;
+}
+.btn-outline:hover {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.btn-light {
+  background: var(--cream);
+  color: var(--teal-deep);
+}
+.btn-light:hover {
+  background: #fff;
+}
+
+.btn-ghost-light {
+  border-color: rgba(247, 242, 234, 0.6);
+  color: var(--cream);
+}
+.btn-ghost-light:hover {
+  border-color: var(--cream);
+  background: rgba(247, 242, 234, 0.1);
+}
+
+.btn svg {
+  flex: none;
+}
+
+.text-link {
+  color: var(--teal);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+}
+.text-link:hover {
+  color: var(--teal-dark);
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -100px;
+  z-index: 100;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: var(--cream);
+  font-weight: 700;
+}
+.skip-link:focus {
+  top: 12px;
+}
+
+main:focus {
+  outline: none;
+}

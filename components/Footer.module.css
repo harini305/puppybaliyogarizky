@@ -1,0 +1,91 @@
+/* Continues the dark contact section, separated by a hairline */
+.footer {
+  background: var(--teal-deep);
+  color: rgba(247, 242, 234, 0.75);
+  font-size: var(--step--1);
+}
+
+.bar {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s) var(--space-l);
+  min-height: var(--footer-h);
+  padding-block: 12px;
+}
+
+.bar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--gutter);
+  right: var(--gutter);
+  border-top: 1px solid rgba(247, 242, 234, 0.15);
+}
+
+.footer a {
+  color: rgba(247, 242, 234, 0.85);
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: var(--cream);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 36px;
+  height: auto;
+  border-radius: 50%;
+  background: var(--cream);
+  padding: 2px;
+}
+
+.nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.social {
+  display: flex;
+  gap: 8px;
+}
+
+.social a {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(247, 242, 234, 0.3);
+  border-radius: 50%;
+  transition: border-color 0.2s ease;
+}
+
+.social a:hover {
+  border-color: var(--cream);
+}
+
+@media (max-width: 899px) {
+  .nav {
+    display: none;
+  }
+  .bar {
+    flex-wrap: nowrap;
+  }
+}
